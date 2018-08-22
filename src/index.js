@@ -6,11 +6,25 @@ import 'swiper/dist/css/swiper.min.css'
 
 import './modules/config'
 
-import App from './App';
-
 import './stylesheets/main.scss'
+
+//全局配置
+import './modules/config'
+
+//全局路由
+import Router from './router'
+
+import store from './store'
+
+import { Provider } from 'react-redux'
+
 
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store = {store} >
+        <Router/>
+    </Provider>
+, document.getElementById('root'));
+
 registerServiceWorker();

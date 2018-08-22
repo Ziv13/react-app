@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react'
 import './index.scss'
-import Swiper from 'swiper/dist/js/swiper.js'
+import Swiper from 'swiper'
+import PropTypes from 'prop-types';
 // https://m.maizuo.com/v4/api/billboard/home?__t=1533886411865
 
 
@@ -13,7 +14,6 @@ const SlideItem = (props) => {
             <img width="100%" src={data.imageUrl} alt=""/>
         </div>
     )
-
 }
 
 class HomeBanner extends Component {
@@ -28,10 +28,12 @@ class HomeBanner extends Component {
         this.$http.get('/mz/v4/api/billboard/home', {
             params: { __t: Date.now() }
         }).then(res => {
-            console.log(res.data.data.billboards)
-            this.setState({ billboards: res.data.data.billboards })
+            //注意，在这里组件可能已经销毁了，就会报警告
+            if ( this.props.unmount ) return false;
+            this.setState({ billboards: res.data.data.billboards })         
         })
     }
+ 
     componentDidUpdate () {
         if (!this.swiper) {
             this.swiper = new Swiper(this.el, {
@@ -46,8 +48,7 @@ class HomeBanner extends Component {
     renderSlideItems () {
         let { billboards } = this.state
         
-        return billboards.forEach(item => (<SlideItem key = {item.id} data = {item}
-             />))
+        return billboards.map(item => (<SlideItem key = {item.id} data = {item} />))
     }
     render () {
         return (
@@ -62,6 +63,9 @@ class HomeBanner extends Component {
 
 }
 
+HomeBanner.propTypes = {
+    name: PropTypes.string//指定name为字符串
+}
 
 
 export default HomeBanner
