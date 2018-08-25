@@ -7,11 +7,11 @@ const http = {
         return new Promise((resolve, rejected) => {
             
             bus.emit('change-loading')
-            axios({
+            axios({ //返回一个axios对象
                 url: options.url,
                 method: options.method || 'GET',
                 params: options.params || {}
-            }).then(res => {
+            }).then(res => {//判断成功与失败
                 bus.emit('change-loading')
                 if ( res.data.code === 200 ) {
                     resolve(res.data.data)

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from  'react-router-dom'
+import { withRouter } from  'react-router-dom'
 import connect from './modules/connect'
+import SpinLoading from './components/SpinLoading'
+import { Button,Spin,Icon } from 'antd';
+const antIcon = <Icon type="meh-o" style={{ fontSize: 24, height: 20 }} spin />;
 
 class App extends Component {
 
@@ -32,10 +35,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Link to = "/login">登录</Link>
         {this.props.children}
+        <SpinLoading loading={true} />
+        <Button type="primary">Primary</Button>
+        <Spin indicator={antIcon} />
       </div>
-    );
+     
+      
+    )
   }
 }
 

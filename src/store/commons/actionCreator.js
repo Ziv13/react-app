@@ -5,8 +5,8 @@ import {
     CHANGE_MENU_CONFIG
 } from './const'
 const actionCreator  = {
-    login ( { username, password, success, fail } ) {
-        return dispatch => {
+    login ( { username, password, success, fail = () => {} } ) {
+        return dispatch => { //异步动作,返回一个接收dispatch对象
             //调用backend api
             http.ajax({
                 url: '/api/login.json',
